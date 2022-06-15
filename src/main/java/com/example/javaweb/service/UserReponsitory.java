@@ -144,4 +144,33 @@ public class UserReponsitory implements IUserReponsitory{
         return user;
 
     }
+
+    @Override
+    public im_User checkUser(String username, String password) {
+        im_User user = null;
+        try
+        {
+            Connection connection=getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM im_user WHERE username = ? and password=?");
+            preparedStatement.setString(1,username);
+            preparedStatement.setString(2,password);
+            //add dependenci
+            ResultSet rs=preparedStatement.executeQuery();
+            while(rs.next())
+            {
+                user=new im_User(rs.getString("id"),rs.getString("username"),
+                        rs.getString("password"),rs.getBoolean("status"),rs.getString("avatar"),
+                        rs.getString("name"),rs.getString("address"),rs.getString("sdt"),
+                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"));
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            //thiếu logger
+            //log4j để ghi log
+        }
+        return user;
+    }
 }

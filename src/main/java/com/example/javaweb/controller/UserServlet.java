@@ -15,9 +15,38 @@ public class UserServlet extends HttpServlet {
     private IUserReponsitory _dbcontext=new UserReponsitory();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if(action == null){
+            action = "";
+        }
+        switch (action){
+
+            case "login":
+                UILoginn(request,response);
+                break;
+            default:
+                listProduct(request, response);
+                break;
+        }
+    }
+
+    private void UILoginn(HttpServletRequest request, HttpServletResponse response) {
+
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/login.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void listProduct(HttpServletRequest request, HttpServletResponse response) {
         List<im_User> users = this. _dbcontext.GetAll();
         request.setAttribute("users", users);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("user/test.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/main.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {

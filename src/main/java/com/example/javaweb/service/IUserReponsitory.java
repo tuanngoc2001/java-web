@@ -9,4 +9,5 @@ public interface IUserReponsitory {
     void addUser(im_User user);
     void updateUser(im_User user);
     im_User findByName(String key);
+    im_User checkUser(String username,String password);
 }
