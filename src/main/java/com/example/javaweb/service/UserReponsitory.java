@@ -13,9 +13,9 @@ public class UserReponsitory implements IUserReponsitory{
     private String password="ngoc06112001";
     private static final String GET_USER_ALL="SELECT  *FROM im_user";
     private static final String REGISTER="INSERT INTO im_user(id,username,password,email) VALUE(?,?,?,?)";
-    private static final String INSERT_USER="INSERT INTO im_user(username,password,status,avatar,name,address,sdt,date,admin,act,id) VALUE(?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String INSERT_USER="INSERT INTO im_user(username,password,status,avatar,name,address,sdt,date,admin,act,id,email) VALUE(?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String UPDATE_USER="UPDATE im_user SET username=?,password=?,status=?,avatar=?,name=?,address=?,sdt=?,date=?,admin=?,act=? where id=?; ";
-//    private static final String DELETE_USER="DELETE FROM im_user WHERE Id=?";
+    private static final String FIND_BY_ID="SELECT * FROM im_user WHERE id=?";
 //    private static final String GET_BY_KEY="SELECT * FROM im_user WHERE name like '%"name%'";
 
     private Connection getConnection()
@@ -47,7 +47,8 @@ public class UserReponsitory implements IUserReponsitory{
                 im_User user=new im_User(rs.getString("id"),rs.getString("username"),
                         rs.getString("password"),rs.getBoolean("status"),rs.getString("avatar"),
                         rs.getString("name"),rs.getString("address"),rs.getString("sdt"),
-                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"),rs.getString("email"));
+                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"),
+                        rs.getString("email"));
                 lstUser.add(user);
             }
         }
@@ -81,6 +82,7 @@ public class UserReponsitory implements IUserReponsitory{
             preparedStatement.setBoolean(9,user.isAdmin());
             preparedStatement.setBoolean(10,user.isAct());
             preparedStatement.setBoolean(11,user.isAct());
+            preparedStatement.setString(11,user.getEmail());
 
             preparedStatement.executeUpdate();
         }catch (Exception e)
@@ -192,6 +194,33 @@ public class UserReponsitory implements IUserReponsitory{
             //thiếu logger
             //log4j để ghi log
         }
+        return user;
+    }
+
+    @Override
+    public im_User FindById(String id) {
+        im_User user=null;
+        try{
+            Connection connection=getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
+            preparedStatement.setString(1,id);
+            ResultSet rs=preparedStatement.executeQuery();
+            while(rs.next())
+            {
+                user=new im_User(
+                        rs.getString("id"),rs.getString("username"),
+                        rs.getString("password"),rs.getBoolean("status"),rs.getString("avatar"),
+                        rs.getString("name"),rs.getString("address"),rs.getString("sdt"),
+                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"),
+                        rs.getString("email")
+                );
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         return user;
     }
 }

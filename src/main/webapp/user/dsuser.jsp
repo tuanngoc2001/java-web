@@ -98,7 +98,7 @@
                             <a class="text-current" href="#">${users.isAct()}</a>
                         </td>
                         <td data-label="">
-                            <a class="text-current" href="/user?action=edit?id=${users.getId()}">Edit</a>
+                            <a class="text-current" href="/user?action=edit&id=${users.getId()}">Edit</a>
                         </td>
                         <td data-label="" class="text-end">
                             <div class="dropdown">

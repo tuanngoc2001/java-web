@@ -29,9 +29,26 @@ public class UserServlet extends HttpServlet {
             case "listuser":
                 ListUser(request,response);
                 break;
+            case "edit":
+                EditUser(request,response);
+                break;
             default:
                 UILoginn(request, response);
                 break;
+        }
+    }
+
+    private void EditUser(HttpServletRequest request, HttpServletResponse response) {
+        String id= request.getParameter("id");
+        im_User users = this._dbcontext.FindById(id);
+        request.setAttribute("users", users);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/editUser.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -134,10 +151,47 @@ public class UserServlet extends HttpServlet {
         {
             case "login":
                 UILoginn(request,response);
+                break;
             case "register":
                 Register(request, response);
                 break;
+            case "edit":
+                UpdateUser(request,response);
 
+                break;
+
+        }
+    }
+
+    private void UpdateUser(HttpServletRequest request, HttpServletResponse response) {
+        String id=request.getParameter("id");
+        String username=request.getParameter("username");
+        String email=request.getParameter("email");
+        String name=request.getParameter("name");
+        String address=request.getParameter("address");
+        String phonenumber=request.getParameter("phone");
+
+        im_User user=this._dbcontext.FindById(id);
+        RequestDispatcher dispatcher;
+        if(user == null){
+            dispatcher = request.getRequestDispatcher("error-404.jsp");
+        } else {
+            user.setName(name);
+            user.setEmail(email);
+            user.setAddress(address);
+            user.setUsername(username);
+            user.setPhoneNumber(phonenumber);
+            this._dbcontext.updateUser(user);
+            request.setAttribute("users", user);
+            request.setAttribute("message", "Customer information was updated");
+            dispatcher = request.getRequestDispatcher("user/editUser.jsp");
+        }
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
