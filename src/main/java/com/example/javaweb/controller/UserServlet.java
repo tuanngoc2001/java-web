@@ -47,8 +47,6 @@ public class UserServlet extends HttpServlet {
             e.printStackTrace();
         }
     }
-
-
     private void Register(HttpServletRequest request, HttpServletResponse response) {
         String username = request.getParameter("username");
         String pass = request.getParameter("password");

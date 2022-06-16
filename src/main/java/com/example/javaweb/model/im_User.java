@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class im_User {
     private String id;
+    private String email;
     private String username;
     private String password;
     private boolean status;
@@ -15,10 +16,18 @@ public class im_User {
     private boolean admin;
     private boolean act;
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public im_User() {
     }
 
-    public im_User(String id, String username, String password, boolean status, String avatar, String name, String address, String phoneNumber, Date date, boolean admin, boolean act) {
+    public im_User(String id, String username, String password, boolean status, String avatar, String name, String address, String phoneNumber, Date date, boolean admin, boolean act,String email) {
         this.id = id;
         this.username = username;
         this.password = password;

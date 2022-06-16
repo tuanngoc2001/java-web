@@ -12,18 +12,9 @@ public class UserReponsitory implements IUserReponsitory{
     private String username="root";
     private String password="ngoc06112001";
     private static final String GET_USER_ALL="SELECT  *FROM im_user";
-
-
     private static final String REGISTER="INSERT INTO im_user(id,username,password,email) VALUE(?,?,?,?)";
-    private static final String INSERT_USER="INSERT INTO im_user(title,username,password,status,avatar,name,address,sdt,date,admin,act,id) VALUE(?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String INSERT_USER="INSERT INTO im_user(username,password,status,avatar,name,address,sdt,date,admin,act,id) VALUE(?,?,?,?,?,?,?,?,?,?,?)";
     private static final String UPDATE_USER="UPDATE im_user SET username=?,password=?,status=?,avatar=?,name=?,address=?,sdt=?,date=?,admin=?,act=? where id=?; ";
-
-
-
-
-
-
-
 //    private static final String DELETE_USER="DELETE FROM im_user WHERE Id=?";
 //    private static final String GET_BY_KEY="SELECT * FROM im_user WHERE name like '%"name%'";
 
@@ -56,7 +47,7 @@ public class UserReponsitory implements IUserReponsitory{
                 im_User user=new im_User(rs.getString("id"),rs.getString("username"),
                         rs.getString("password"),rs.getBoolean("status"),rs.getString("avatar"),
                         rs.getString("name"),rs.getString("address"),rs.getString("sdt"),
-                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"));
+                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"),rs.getString("email"));
                 lstUser.add(user);
             }
         }
@@ -78,6 +69,7 @@ public class UserReponsitory implements IUserReponsitory{
         {
             Connection connection=getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER);
+
             preparedStatement.setString(1,user.getUsername());
             preparedStatement.setString(2,user.getPassword());
             preparedStatement.setBoolean(3,user.isStatus());
@@ -161,7 +153,7 @@ public class UserReponsitory implements IUserReponsitory{
                 user=new im_User(rs.getString("id"),rs.getString("username"),
                         rs.getString("password"),rs.getBoolean("status"),rs.getString("avatar"),
                         rs.getString("name"),rs.getString("address"),rs.getString("sdt"),
-                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"));
+                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"),rs.getString("email"));
             }
 
         }
@@ -191,7 +183,7 @@ public class UserReponsitory implements IUserReponsitory{
                 user=new im_User(rs.getString("id"),rs.getString("username"),
                         rs.getString("password"),rs.getBoolean("status"),rs.getString("avatar"),
                         rs.getString("name"),rs.getString("address"),rs.getString("sdt"),
-                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"));
+                        rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"),rs.getString("email"));
             }
         }
         catch (Exception e)
