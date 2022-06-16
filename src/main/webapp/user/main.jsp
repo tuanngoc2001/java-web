@@ -5,6 +5,8 @@
   Time: 8:10 PM
   To change this template use File | Settings | File Templates.
 --%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -35,9 +37,14 @@
         <div class="w3-dropdown-hover w3-hide-small">
         <button class="w3-button w3-padding-large" title="Notifications"><i class="fa-solid fa-bars"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>
         <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
-            <a href="/user?action=listuser" class="w3-bar-item w3-button">Danh sách ngưởi dùng</a>
-            <a href="#" class="w3-bar-item w3-button">Đăng xuất</a>
-<%--            <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>--%>
+            <c:if test="${sessionScope.user.isAdmin() == true}">
+                <a href="/user?action=listuser" class="w3-bar-item w3-button">Danh sách ngưởi dùng</a>
+                <a href="/user?action=main" class="w3-bar-item w3-button">Đăng xuất</a>
+            </c:if>
+            <c:if test="${sessionScope.user.isAdmin() == null}">
+                <a href="/user?action=login" class="w3-bar-item w3-button">Đăng Nhập</a>
+            </c:if>
+
         </div>
 
     </div>
@@ -65,12 +72,19 @@
             <!-- Profile -->
             <div class="w3-card w3-round w3-white">
                 <div class="w3-container">
-                    <h4 class="w3-center">My Profile</h4>
+                    <h4 class="w3-center">
+                        <c:if test="${sessionScope.user.isAdmin() == null}">
+                            Khách
+                        </c:if></h4>
                     <p class="w3-center"><img src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
                     <hr>
-                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>${users.getName()}</p>
-                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>${users.getAddress()}</p>
-                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> ${users.getDate()}</p>
+                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>
+
+                        ${sessionScope.user.getName()}
+
+                        </p>
+                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>${sessionScope.user.getAddress()}</p>
+                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> ${sessionScope.user.getDate()}</p>
                 </div>
             </div>
             <br>

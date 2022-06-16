@@ -39,7 +39,9 @@ public class UserServlet extends HttpServlet {
     }
 
     private void EditUser(HttpServletRequest request, HttpServletResponse response) {
-        String id= request.getParameter("id");
+        HttpSession session= request.getSession();
+        im_User user_login= (im_User) session.getAttribute("user");
+        String id= user_login.getId();
         im_User users = this._dbcontext.FindById(id);
         request.setAttribute("users", users);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/editUser.jsp");
@@ -95,10 +97,13 @@ public class UserServlet extends HttpServlet {
     }
 
     private void UILoginn(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session=request.getSession();
         String username=request.getParameter("username");
         String pass=request.getParameter("password");
-        im_User users=this._dbcontext.checkUser(username,pass);
-        if(users==null)
+
+        im_User user=this._dbcontext.checkUser(username,pass);
+        session.setAttribute("user",user);
+        if(user==null)
         {
             //kiểm tra xem nó đang đăng ký hay đăng nhập
 
@@ -110,12 +115,10 @@ public class UserServlet extends HttpServlet {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
         }
         else
         {
-            request.setAttribute("users", users);
+            //request.setAttribute("users", user);
             RequestDispatcher dispatcher = request.getRequestDispatcher("user/main.jsp");
             try {
                 dispatcher.forward(request, response);
@@ -128,9 +131,6 @@ public class UserServlet extends HttpServlet {
     }
 
     private void MainUser(HttpServletRequest request, HttpServletResponse response) {
-
-        List<im_User> users = this. _dbcontext.GetAll();
-        request.setAttribute("users", users);
         RequestDispatcher dispatcher = request.getRequestDispatcher("user/main.jsp");
         try {
             dispatcher.forward(request, response);
@@ -157,7 +157,6 @@ public class UserServlet extends HttpServlet {
                 break;
             case "edit":
                 UpdateUser(request,response);
-
                 break;
 
         }
