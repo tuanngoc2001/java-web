@@ -14,6 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -31,13 +33,15 @@
         <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
         <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
         <div class="w3-dropdown-hover w3-hide-small">
-            <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>
-            <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
-                <a href="#" class="w3-bar-item w3-button">One new friend request</a>
-                <a href="#" class="w3-bar-item w3-button">John Doe posted on your wall</a>
-                <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>
-            </div>
+        <button class="w3-button w3-padding-large" title="Notifications"><i class="fa-solid fa-bars"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>
+        <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
+            <a href="/user?action=listuser" class="w3-bar-item w3-button">Danh sách ngưởi dùng</a>
+            <a href="#" class="w3-bar-item w3-button">Đăng xuất</a>
+<%--            <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>--%>
         </div>
+
+    </div>
+
         <a href="/user?action=login" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
             <img src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
         </a>
@@ -64,9 +68,9 @@
                     <h4 class="w3-center">My Profile</h4>
                     <p class="w3-center"><img src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
                     <hr>
-                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>${users.getName()}</p>
+                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>${users.getAddress()}</p>
+                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> ${users.getDate()}</p>
                 </div>
             </div>
             <br>

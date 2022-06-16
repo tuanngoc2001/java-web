@@ -5,6 +5,7 @@ import com.example.javaweb.model.im_User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class UserReponsitory implements IUserReponsitory{
     private String jdbcUrl="jdbc:mysql://localhost:3306/db";
@@ -12,9 +13,17 @@ public class UserReponsitory implements IUserReponsitory{
     private String password="ngoc06112001";
     private static final String GET_USER_ALL="SELECT  *FROM im_user";
 
-    private static final String GET_USER_GETBYID="SELECT * FROM im_user WHERE id=?";
-    private static final String INSERT_USER="INSERT INTO im_user(title,username,password,status,avatar,name,address,sdt,date,admin,act)";
+
+    private static final String REGISTER="INSERT INTO im_user(id,username,password,email) VALUE(?,?,?,?)";
+    private static final String INSERT_USER="INSERT INTO im_user(title,username,password,status,avatar,name,address,sdt,date,admin,act,id) VALUE(?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String UPDATE_USER="UPDATE im_user SET username=?,password=?,status=?,avatar=?,name=?,address=?,sdt=?,date=?,admin=?,act=? where id=?; ";
+
+
+
+
+
+
+
 //    private static final String DELETE_USER="DELETE FROM im_user WHERE Id=?";
 //    private static final String GET_BY_KEY="SELECT * FROM im_user WHERE name like '%"name%'";
 
@@ -64,6 +73,7 @@ public class UserReponsitory implements IUserReponsitory{
 
     @Override
     public void addUser(im_User user) {
+        Random rd=new Random();
         try
         {
             Connection connection=getConnection();
@@ -78,6 +88,7 @@ public class UserReponsitory implements IUserReponsitory{
             preparedStatement.setDate(8, (Date) user.getDate());
             preparedStatement.setBoolean(9,user.isAdmin());
             preparedStatement.setBoolean(10,user.isAct());
+            preparedStatement.setBoolean(11,user.isAct());
 
             preparedStatement.executeUpdate();
         }catch (Exception e)
@@ -85,6 +96,25 @@ public class UserReponsitory implements IUserReponsitory{
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void register(String user, String pass, String email) {
+        Random rd=new Random();
+        try
+        {
+            Connection connection=getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(REGISTER);
+            preparedStatement.setString(1,String.valueOf(rd.nextInt(1000)));
+            preparedStatement.setString(2,user);
+            preparedStatement.setString(3,pass);
+            preparedStatement.setString(4,email);
+            preparedStatement.executeUpdate();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void updateUser(im_User user) {
@@ -163,7 +193,6 @@ public class UserReponsitory implements IUserReponsitory{
                         rs.getString("name"),rs.getString("address"),rs.getString("sdt"),
                         rs.getDate("date"),rs.getBoolean("admin"),rs.getBoolean("act"));
             }
-
         }
         catch (Exception e)
         {
