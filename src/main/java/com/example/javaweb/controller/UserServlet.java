@@ -32,9 +32,25 @@ public class UserServlet extends HttpServlet {
             case "edit":
                 EditUser(request,response);
                 break;
+            case "dangxuat":
+                Logout(request,response);
+                break;
             default:
                 UILoginn(request, response);
                 break;
+        }
+    }
+
+    private void Logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session=request.getSession();
+        session.invalidate();
+        RequestDispatcher dispatcher = request.getRequestDispatcher("user/main.jsp");
+        try {
+            dispatcher.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

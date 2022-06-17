@@ -39,7 +39,7 @@
         <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
             <c:if test="${sessionScope.user.isAdmin() == true}">
                 <a href="/user?action=listuser" class="w3-bar-item w3-button">Danh sách ngưởi dùng</a>
-                <a href="/user?action=main" class="w3-bar-item w3-button">Đăng xuất</a>
+                <a href="/user?action=dangxuat" class="w3-bar-item w3-button">Đăng xuất</a>
             </c:if>
             <c:if test="${sessionScope.user.isAdmin() == null}">
                 <a href="/user?action=login" class="w3-bar-item w3-button">Đăng Nhập</a>
@@ -72,19 +72,27 @@
             <!-- Profile -->
             <div class="w3-card w3-round w3-white">
                 <div class="w3-container">
-                    <h4 class="w3-center">
+
+                        <c:if test="${sessionScope.user.isAdmin() != null}">
+                            <h4 class="w3-center">My Profile</h4>
+                            <p class="w3-center"><img src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+                            <hr>
+                            <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>
+
+                                    ${sessionScope.user.getName()}
+
+                            </p>
+                            <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>${sessionScope.user.getAddress()}</p>
+                            <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> ${sessionScope.user.getDate()}</p>
+                        </c:if>
                         <c:if test="${sessionScope.user.isAdmin() == null}">
-                            Khách
-                        </c:if></h4>
-                    <p class="w3-center"><img src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
-                    <hr>
-                    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i>
+                            <p class="w3-center"><img src="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+                            <hr>
+                            <p style="font-weight: bold;text-align: center">
+                                    Khách
+                            </p>
+                        </c:if>
 
-                        ${sessionScope.user.getName()}
-
-                        </p>
-                    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i>${sessionScope.user.getAddress()}</p>
-                    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> ${sessionScope.user.getDate()}</p>
                 </div>
             </div>
             <br>
